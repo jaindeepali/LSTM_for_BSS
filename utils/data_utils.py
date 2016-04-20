@@ -19,13 +19,16 @@ def _stft(x, fs, framesz = 0.005, hop = 0.001):
 		fft_blocks.append(new_block)
 	return fft_blocks
 
-def _istft(X, fs, T, hop = 0.001):
-	x = scipy.zeros(T*fs)
-	framesamp = X.shape[1]
-	hopsamp = int(hop*fs)
-	for n,i in enumerate(range(0, len(x)-framesamp, hopsamp)):
-		x[i:i+framesamp] += scipy.real(scipy.ifft(X[n]))
-		return x
+def _istft(X):
+	time_blocks = []
+	for block in X:
+		num_elems = block.shape[0] / 2
+		real_chunk = block[0:num_elems]
+		imag_chunk = block[num_elems:]
+		new_block = real_chunk + 1.0j * imag_chunk
+		time_block = scipy.ifft(new_block)
+		time_blocks.append(time_block)
+	return np.concatenate(time_blocks)
 
 def _crop(audio, n):
 	return audio[:n]
@@ -40,13 +43,7 @@ def load_data(sample_number='sinelong', source_number=1, domain='time'):
 	fs, mixed = wav.read(os.path.join('sound_files', 'mixed', str(sample_number) ,'1.wav'))
 	mixed = _crop(mixed, 200000) 
 	source = _crop(source, 200000)
-
-	plt.plot(mixed[1:1000])
-	plt.savefig("data/plots/" + str(sample_number) + "/mixed.png")
-
-	plt.plot(source[1:1000])
-	plt.savefig("data/plots/" + str(sample_number) + "/source.png")
-
+	
 	if domain == 'freq':
 		source = _stft(source, Fs=fs1)
 		mixed = _stft(mixed, Fs=fs)
@@ -65,6 +62,16 @@ def load_data(sample_number='sinelong', source_number=1, domain='time'):
 
 	
 def save_output(predicted, sample_number='sinelong', domain='time'):
-	pd.DataFrame(predicted).to_csv("data/output/" + str(sample_number) + "/predicted.csv")
+
+	outputfile = "data/output/" + str(sample_number) + "/predicted.csv"
+	plotfile = "data/plots/" + str(sample_number) + "/out.png"
+	os.makedirs(os.path.dirname(outputfile), exist_ok=True)
+	os.makedirs(os.path.dirname(plotfile), exist_ok=True)
+	
+	if domain == 'freq':
+		predicted = _istft(predicted)
+	
+	pd.DataFrame(predicted).to_csv(outputfile)
+	plt.clf()
 	plt.plot(predicted[1:1000])
-	plt.savefig("data/plots/" + str(sample_number) + "/out.png")
+	plt.savefig()

@@ -6,7 +6,7 @@ import sys
 import os
 
 print "Loading data ..."
-X_test, Y_test = data_utils.load_data()
+X_test, Y_test = data_utils.load_data(domain='freq')
 print "Data loaded."
 
 in_neurons = 1
@@ -28,4 +28,4 @@ rmse = np.sqrt(((predicted - Y_test) ** 2).mean(axis=0))
 
 print 'Error:' + str(rmse)
 
-data_utils.save_output(predicted)
+data_utils.save_output(predicted, domain='freq')

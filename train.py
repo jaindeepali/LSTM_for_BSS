@@ -3,11 +3,11 @@ import utils.model_utils as model_utils
 import os
 
 print "Loading data ..."
-X_train, Y_train = data_utils.load_data()
+X_train, Y_train = data_utils.load_data(domain='freq')
 print "Data loaded"
 
-in_neurons = 1
-out_neurons = 1
+in_neurons = X_train.shape[-1]
+out_neurons = Y_train.shape[-1]
 
 model = model_utils.create_network(in_neurons, out_neurons)
 
