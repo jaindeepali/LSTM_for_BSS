@@ -45,8 +45,8 @@ def load_data(sample_number='sinelong', source_number=1, domain='time'):
 	source = _crop(source, 200000)
 	
 	if domain == 'freq':
-		source = _stft(source, Fs=fs1)
-		mixed = _stft(mixed, Fs=fs)
+		source = _stft(source, fs=fs1)
+		mixed = _stft(mixed, fs=fs)
 
 	mixed = pd.DataFrame(mixed)
 	source = pd.DataFrame(source)
@@ -70,8 +70,8 @@ def save_output(predicted, sample_number='sinelong', domain='time'):
 	
 	if domain == 'freq':
 		predicted = _istft(predicted)
-	
+
 	pd.DataFrame(predicted).to_csv(outputfile)
 	plt.clf()
 	plt.plot(predicted[1:1000])
-	plt.savefig()
+	plt.savefig(plotfile)

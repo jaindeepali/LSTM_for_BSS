@@ -9,8 +9,8 @@ print "Loading data ..."
 X_test, Y_test = data_utils.load_data(domain='freq')
 print "Data loaded."
 
-in_neurons = 1
-out_neurons = 1
+in_neurons = X_test.shape[-1]
+out_neurons = Y_test.shape[-1]
 
 try:
 	iteration = sys.argv[1]
