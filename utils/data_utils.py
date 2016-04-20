@@ -26,6 +26,7 @@ def _istft(self, X, fs, T, hop):
 		return x
 
 def _normalize(audio):
+	audio *= 1000
 	return audio / np.linalg.norm(audio)
 
 def load_data(sample_number='sine', source_number=1, domain='time'):
