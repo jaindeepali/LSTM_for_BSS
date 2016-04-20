@@ -29,7 +29,7 @@ def _normalize(audio):
 	audio *= 1000
 	return audio / np.linalg.norm(audio)
 
-def load_data(sample_number='sine', source_number=1, domain='time'):
+def load_data(sample_number='sinelong', source_number=1, domain='time'):
 
 	fs1, source = wav.read(os.path.join('sound_files', 'input', str(sample_number) ,str(source_number) + '.wav'))
 	fs, mixed = wav.read(os.path.join('sound_files', 'mixed', str(sample_number) ,'1.wav'))
