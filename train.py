@@ -11,8 +11,15 @@ out_neurons = 1
 model = model_utils.create_network(in_neurons, out_neurons)
 
 print "Training ..."
-model.fit(X_train, Y_train, batch_size=500, nb_epoch=500)  
+iterations = 50
+epochs_per_iteration = 10
+batch_size = 10000
+
+for iteration in range(iterations):
+	print "Iteration Number: " + str(i)
+	model.fit(X_train, Y_train, batch_size=batch_size, nb_epoch=epochs_per_iteration)  
+	fname = os.path.join('models','trained_model_' + str(i) + '.hdf5')
+	model.save_weights(fname)
+
 print "Training complete"
 
-fname = 'models/trained_model.hdf5'
-model.save_weights(fname)
