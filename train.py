@@ -1,5 +1,6 @@
 import utils.data_utils as data_utils
 import utils.model_utils as model_utils
+import os
 
 print "Loading data ..."
 X_train, Y_train = data_utils.load_data()
@@ -13,7 +14,7 @@ model = model_utils.create_network(in_neurons, out_neurons)
 print "Training ..."
 iterations = 100
 epochs_per_iteration = 5
-batch_size = 10000
+batch_size = 1000
 
 for iteration in range(iterations):
 	print "Iteration Number: " + str(iteration)

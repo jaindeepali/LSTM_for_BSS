@@ -1,3 +1,4 @@
 *.pyc
 
 extra/*
+models/*

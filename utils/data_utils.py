@@ -36,8 +36,8 @@ def load_data(sample_number='sinelong', source_number=1, domain='time'):
 
 	fs1, source = wav.read(os.path.join('sound_files', 'input', str(sample_number) ,str(source_number) + '.wav'))
 	fs, mixed = wav.read(os.path.join('sound_files', 'mixed', str(sample_number) ,'1.wav'))
-	mixed = _crop(mixed, 1000000) 
-	source = _crop(source, 1000000)
+	mixed = _crop(mixed, 200000) 
+	source = _crop(source, 200000)
 
 	if domain == 'freq':
 		source = _stft(source, Fs=fs1)

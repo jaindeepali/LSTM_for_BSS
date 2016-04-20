@@ -14,7 +14,7 @@ def create_network(in_neurons, out_neurons):
 	model.add(Activation("linear"))
 	model.compile(loss="mean_squared_error", optimizer='rmsprop')  
 
-	print "Network Created..."
+	print "Network Created."
 	
 	return model
 	

@@ -11,9 +11,10 @@ print "Data loaded."
 
 in_neurons = 1
 out_neurons = 1
+iteration = 0
 print "Loading model ..."
 model = model_utils.create_network(in_neurons, out_neurons)
-fname = 'models/trained_model.hdf5'
+fname = 'models/trained_model_' + str(iteration) + '.hdf5'
 model.load_weights(fname)
 print "Model loaded."
 
