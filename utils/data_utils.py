@@ -25,6 +25,9 @@ def _istft(self, X, fs, T, hop):
 		x[i:i+framesamp] += scipy.real(scipy.ifft(X[n]))
 		return x
 
+def _crop(audio, n):
+	return audio[:n]
+	
 def _normalize(audio):
 	audio *= 1000
 	return audio / np.linalg.norm(audio)
@@ -33,8 +36,8 @@ def load_data(sample_number='sinelong', source_number=1, domain='time'):
 
 	fs1, source = wav.read(os.path.join('sound_files', 'input', str(sample_number) ,str(source_number) + '.wav'))
 	fs, mixed = wav.read(os.path.join('sound_files', 'mixed', str(sample_number) ,'1.wav'))
-	mixed = _normalize(mixed) 
-	source = _normalize(source)
+	mixed = _crop(mixed, 1000000) 
+	source = _crop(source, 1000000)
 
 	if domain == 'freq':
 		source = _stft(source, Fs=fs1)

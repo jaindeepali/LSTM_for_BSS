@@ -1,7 +1,9 @@
 import utils.data_utils as data_utils
 import utils.model_utils as model_utils
 
+print "Loading data ..."
 X_train, Y_train = data_utils.load_data()
+print "Data loaded"
 
 in_neurons = 1
 out_neurons = 1
