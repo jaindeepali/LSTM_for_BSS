@@ -1,6 +1,9 @@
 import utils.data_utils as data_utils
 import utils.model_utils as model_utils
+
+import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
 X_test, Y_test = data_utils.load_data()
 
