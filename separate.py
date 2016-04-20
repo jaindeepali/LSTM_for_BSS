@@ -11,7 +11,7 @@ model = model_utils.create_network(in_neurons, out_neurons)
 fname = 'models/trained_model.hdf5'
 model.load_weights(fname)
 
-predicted = model.predict(X_train)
+predicted = model.predict(X_test)
 rmse = np.sqrt(((predicted - Y_test) ** 2).mean(axis=0))
 
 print 'Error:' + str(rmse)
