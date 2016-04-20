@@ -4,6 +4,9 @@ import numpy as np
 
 X_test, Y_test = data_utils.load_data()
 
+in_neurons = 1
+out_neurons = 1
+
 model = model_utils.create_network(in_neurons, out_neurons)
 fname = 'models/trained_model.hdf5'
 model.load_weights(fname)
