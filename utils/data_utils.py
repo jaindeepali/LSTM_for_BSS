@@ -3,21 +3,23 @@ import pandas as pd
 import numpy as np
 import scipy.io.wavfile as wav
 import scipy
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
-def _stft(self, x, fs, framesz, hop):
+
+def _stft(x, fs, framesz = 0.005, hop = 0.001):
 	framesamp = int(framesz*fs)
 	hopsamp = int(hop*fs)
-	w = scipy.hanning(framesamp)
-	X = scipy.array([scipy.fft(w*x[i:i+framesamp]) 
+	X = scipy.array([scipy.fft(x[i:i+framesamp]) 
 					 for i in range(0, len(x)-framesamp, hopsamp)])
-	print X
 	fft_blocks = []
 	for fft_block in X:
 		new_block = np.concatenate((np.real(fft_block), np.imag(fft_block)))
 		fft_blocks.append(new_block)
 	return fft_blocks
 
-def _istft(self, X, fs, T, hop):
+def _istft(X, fs, T, hop = 0.001):
 	x = scipy.zeros(T*fs)
 	framesamp = X.shape[1]
 	hopsamp = int(hop*fs)
@@ -39,6 +41,12 @@ def load_data(sample_number='sinelong', source_number=1, domain='time'):
 	mixed = _crop(mixed, 200000) 
 	source = _crop(source, 200000)
 
+	plt.plot(mixed[1:1000])
+	plt.savefig("data/plots/" + str(sample_number) + "/mixed.png")
+
+	plt.plot(source[1:1000])
+	plt.savefig("data/plots/" + str(sample_number) + "/source.png")
+
 	if domain == 'freq':
 		source = _stft(source, Fs=fs1)
 		mixed = _stft(mixed, Fs=fs)
@@ -56,3 +64,7 @@ def load_data(sample_number='sinelong', source_number=1, domain='time'):
 	return X_Train, Y_Train
 
 	
+def save_output(predicted, sample_number='sinelong', domain='time'):
+	pd.DataFrame(predicted).to_csv("data/output/" + str(sample_number) + "/predicted.csv")
+	plt.plot(predicted[1:1000])
+	plt.savefig("data/plots/" + str(sample_number) + "/out.png")
